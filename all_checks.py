@@ -2,6 +2,8 @@
 import os
 import sys
 import shutil
+import psutil
+from network import *
 
 # Check Reboot function
 def check_reboot():
@@ -16,6 +18,12 @@ def check_disk_usage(disk):
     return free > 20
 
 
+def check_cpu_usage():
+    """Verifies that there's enough unused CPU"""
+    usage = psutil.cpu_percent(1)
+    return usage < 75
+
+
 # Main Function
 def main():
     if check_reboot():
@@ -23,6 +31,13 @@ def main():
         sys.exit(1)
     print("Everything is OK...")
     sys.exit(0)
+
+    if not check_disk_usage("/") or not check_cpu_usage():
+        print("ERROR!")
+    elif check_localhost() and check_connectivity():
+        print("Everything ok.")
+    else:
+        print("Network Check failed.")
 
 
 main()
