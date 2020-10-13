@@ -3,7 +3,6 @@ import os
 import sys
 import shutil
 import psutil
-from network import *
 
 # Check Reboot function
 def check_reboot():
@@ -24,20 +23,23 @@ def check_cpu_usage():
     return usage < 75
 
 
+def check_root_full():
+    """
+    Return True if the root partition is full, false otherwise.
+    """
+    return check_disk_usage("/")
+
+
 # Main Function
 def main():
     if check_reboot():
         print("Pending Reboot and it need to be restarted.....")
         sys.exit(1)
     print("Everything is OK...")
-    sys.exit(0)
 
     if not check_disk_usage("/") or not check_cpu_usage():
         print("ERROR!")
-    elif check_localhost() and check_connectivity():
-        print("Everything ok.")
-    else:
-        print("Network Check failed.")
+    sys.exit(0)
 
 
 main()
