@@ -38,7 +38,7 @@ def check_root_full():
 
 # Main Function
 def main():
-
+    #cehck condtion
     if check_reboot() or check_root_full():
         print("Pending Reboot and it need to be restarted.....")
         sys.exit(1)
@@ -47,6 +47,6 @@ def main():
     if not check_disk_usage("/") or not check_cpu_usage():
         print("ERROR!")
     sys.exit(0)
-
+    
 
 main()
