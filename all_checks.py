@@ -3,6 +3,7 @@ import os
 import sys
 import shutil
 import psutil
+import socket
 
 # Check Reboot function
 def check_reboot():
@@ -17,12 +18,8 @@ def check_disk_usage(disk):
     free = du.free / du.total * 100
     return free > 20
 
-<<<<<<< HEAD
-#Check spu usage 
-=======
 
 # check cpu usage
->>>>>>> refactor
 def check_cpu_usage():
     """Verifies that there's enough unused CPU"""
     usage = psutil.cpu_percent(1)
@@ -36,10 +33,21 @@ def check_root_full():
     return check_disk_usage("/")
 
 
+def check_no_network():
+    """
+    Return True if its resolve Google URL
+    """
+    try:
+        socket.gethostbyname("wwww.google.com")
+        return False
+    except:
+        return True
+
+
 # Main Function
 def main():
-    #cehck condtion
-    if check_reboot() or check_root_full():
+
+    if check_reboot() or check_root_full() or check_no_network():
         print("Pending Reboot and it need to be restarted.....")
         sys.exit(1)
     print("Everything is OK...")
@@ -47,6 +55,6 @@ def main():
     if not check_disk_usage("/") or not check_cpu_usage():
         print("ERROR!")
     sys.exit(0)
-    
+
 
 main()
