@@ -10,6 +10,7 @@ def check_reboot():
     return os.path.exists("/run/reboot-requires")
 
 
+# check disk usage
 def check_disk_usage(disk):
     """Verifies that there's enough free space on disk"""
     du = shutil.disk_usage(disk)
@@ -17,6 +18,7 @@ def check_disk_usage(disk):
     return free > 20
 
 
+# check cpu usage
 def check_cpu_usage():
     """Verifies that there's enough unused CPU"""
     usage = psutil.cpu_percent(1)
@@ -32,6 +34,7 @@ def check_root_full():
 
 # Main Function
 def main():
+
     if check_reboot() or check_root_full():
         print("Pending Reboot and it need to be restarted.....")
         sys.exit(1)
