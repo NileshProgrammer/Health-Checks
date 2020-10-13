@@ -17,7 +17,7 @@ def check_disk_usage(disk):
     free = du.free / du.total * 100
     return free > 20
 
-
+#Check spu usage 
 def check_cpu_usage():
     """Verifies that there's enough unused CPU"""
     usage = psutil.cpu_percent(1)
