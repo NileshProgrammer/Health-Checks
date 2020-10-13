@@ -32,7 +32,7 @@ def check_root_full():
 
 # Main Function
 def main():
-    if check_reboot():
+    if check_reboot() or check_root_full():
         print("Pending Reboot and it need to be restarted.....")
         sys.exit(1)
     print("Everything is OK...")
